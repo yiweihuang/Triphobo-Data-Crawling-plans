@@ -14,4 +14,5 @@ class TripdetailItem(scrapy.Item):
     trip_end_time = scrapy.Field()
     trip_path_city = scrapy.Field()
     trip_path_detail = scrapy.Field()
+    author_id = scrapy.Field()
     pass
