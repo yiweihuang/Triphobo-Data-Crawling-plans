@@ -48,7 +48,15 @@ class TripDetailSpider(scrapy.Spider):
         temparr = []
         for i in range(1, stay_days+1, 1):
             location = plan_json['itinerary_day_cities'][str(i)]
-            location_name = list(location.values())[0]['name']
+            if len(location) is not 0:
+                if len(list(location.values())) > 1:
+                    location_name = []
+                    for plane in list(location.values()):
+                        location_name.append(plane['name'])
+                else:
+                    location_name = list(location.values())[0]['name']
+            elif len(location) is 0:
+                location_name = ' '
             plan_detail = Selector(text = plan_json['itinerary_day_html'][str(i)])
             content = plan_detail.xpath('//div[contains(@class, "step-2-attraction-details")]//h4//text()').extract()
             content = [x for x in content if '\n' not in x and 'Additional time available for you to plan.' not in x]
